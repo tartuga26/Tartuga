@@ -1,0 +1,227 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <link rel="manifest" href="/static/manifest.webmanifest" />
+  <title>AI Content Factory</title>
+  <style>
+    :root{--bg:#0b1220;--panel:#111827;--soft:#1f2937;--text:#f9fafb;--muted:#9ca3af;--accent:#22c55e;--accent2:#38bdf8;--danger:#ef4444}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial;background:linear-gradient(180deg,#08111f,#0b1220 55%,#101827);color:var(--text);min-height:100vh}
+    .app{max-width:720px;margin:auto;padding:18px 14px 92px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+    .brand h1{font-size:20px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:4px 0 0}
+    .badge{background:#12351f;color:#86efac;border:1px solid #166534;padding:7px 10px;border-radius:999px;font-size:12px}
+    .hero{background:linear-gradient(135deg,#172554,#0f172a 50%,#064e3b);padding:18px;border-radius:22px;border:1px solid #263244;box-shadow:0 15px 40px rgba(0,0,0,.25)}
+    .hero h2{margin:0 0 8px;font-size:24px}.hero p{margin:0;color:#cbd5e1;line-height:1.7}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+    .card{background:rgba(17,24,39,.92);border:1px solid #263244;border-radius:18px;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .card h3{margin:0 0 8px;font-size:15px}.card p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+    .big{grid-column:1/-1}
+    button{width:100%;border:0;border-radius:14px;padding:13px 14px;font-weight:700;font-size:14px;cursor:pointer}
+    .primary{background:var(--accent);color:#052e16}.secondary{background:#1d4ed8;color:white}.ghost{background:#1f2937;color:white;border:1px solid #374151}.danger{background:#7f1d1d;color:#fee2e2}
+    input,select,textarea{width:100%;background:#0b1220;color:white;border:1px solid #334155;border-radius:13px;padding:12px;margin:7px 0;font-size:14px}
+    textarea{min-height:140px;resize:vertical}
+    .row{display:flex;gap:9px}.row>*{flex:1}
+    .section{display:none}.section.active{display:block}
+    .ideas{display:grid;gap:9px;margin-top:10px}
+    .idea{background:#0f172a;border:1px solid #273449;border-radius:14px;padding:12px}
+    .idea strong{display:block;margin-bottom:5px}.score{font-size:12px;color:#86efac}
+    .status{margin-top:10px;font-size:12px;color:#bae6fd;min-height:18px}
+    .preview{aspect-ratio:9/16;max-height:460px;margin:12px auto;background:linear-gradient(160deg,#111827,#172554);border-radius:24px;border:1px dashed #475569;display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;color:#cbd5e1}
+    nav{position:fixed;bottom:0;left:0;right:0;background:rgba(7,12,22,.96);backdrop-filter:blur(15px);border-top:1px solid #263244;display:flex;justify-content:center;z-index:20}
+    .navinner{width:min(720px,100%);display:grid;grid-template-columns:repeat(5,1fr);padding:7px 6px calc(7px + env(safe-area-inset-bottom))}
+    .navbtn{background:transparent;color:#94a3b8;padding:8px 3px;font-size:11px;border-radius:12px}.navbtn.active{color:white;background:#1f2937}
+    .icon{display:block;font-size:20px;margin-bottom:2px}
+    .pill{display:inline-block;background:#1e293b;border:1px solid #334155;color:#cbd5e1;padding:5px 8px;border-radius:999px;font-size:11px;margin:3px}
+    @media(max-width:420px){.hero h2{font-size:21px}.grid{grid-template-columns:1fr 1fr}.card{padding:13px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand"><h1>AI Content Factory</h1><p>مصنع المحتوى الذكي من الموبايل</p></div>
+    <div class="badge">● Online</div>
+  </div>
+
+  <section id="home" class="section active">
+    <div class="hero">
+      <h2>اصنع محتوى كامل من فكرة واحدة</h2>
+      <p>أفكار → سكربت → مشاهد → مراجعة → نشر على YouTube وTikTok.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>🔥 ترندات</h3><p>اكتشاف مواضيع قابلة للتحويل لمحتوى.</p></div>
+      <div class="card"><h3>💡 أفكار</h3><p>توليد وتقييم أفضل الأفكار.</p></div>
+      <div class="card"><h3>📝 سكربت</h3><p>Hook + Body + CTA باللهجة المصرية.</p></div>
+      <div class="card"><h3>🎬 فيديو</h3><p>تقسيم تلقائي إلى مشاهد.</p></div>
+      <div class="card big">
+        <button class="primary" onclick="go('ideas')">إنشاء محتوى جديد</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="ideas" class="section">
+    <div class="card">
+      <h3>💡 مولد الأفكار</h3>
+      <select id="niche">
+        <option value="music">الموسيقى</option>
+        <option value="entertainment">الترفيه</option>
+        <option value="history">التاريخ</option>
+        <option value="tourism">السياحة</option>
+        <option value="technology">التكنولوجيا</option>
+      </select>
+      <input id="seed" placeholder="موضوع اختياري... مثال: أغاني التسعينات" />
+      <button class="primary" onclick="generateIdeas()">ولّد 5 أفكار</button>
+      <div id="ideasStatus" class="status"></div>
+      <div id="ideasList" class="ideas"></div>
+    </div>
+  </section>
+
+  <section id="script" class="section">
+    <div class="card">
+      <h3>📝 كتابة السكربت</h3>
+      <input id="ideaTitle" placeholder="الفكرة المختارة" />
+      <div class="row">
+        <select id="duration">
+          <option value="30">30 ثانية</option>
+          <option value="45" selected>45 ثانية</option>
+          <option value="60">60 ثانية</option>
+        </select>
+        <select id="tone">
+          <option value="energetic">حماسي</option>
+          <option value="storytelling">قصصي</option>
+          <option value="educational">تعليمي</option>
+        </select>
+      </div>
+      <button class="secondary" onclick="generateScript()">اكتب السكربت</button>
+      <textarea id="scriptText" placeholder="السكريبت سيظهر هنا..."></textarea>
+      <button class="ghost" onclick="planVideo()">حوّل السكربت لمشاهد فيديو</button>
+      <div id="scriptStatus" class="status"></div>
+    </div>
+  </section>
+
+  <section id="video" class="section">
+    <div class="card">
+      <h3>🎬 خطة الفيديو</h3>
+      <div class="preview" id="preview">معاينة الخطة ستظهر هنا بعد إنشاء المشاهد.</div>
+      <div id="scenePills"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="primary" onclick="approveVideo()">✅ موافقة</button>
+        <button class="danger" onclick="alert('تم وضع الفيديو للمراجعة')">إعادة</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="publish" class="section">
+    <div class="card">
+      <h3>📤 النشر</h3>
+      <input id="pubTitle" placeholder="عنوان الفيديو" />
+      <textarea id="pubDesc" placeholder="الوصف / الكابشن"></textarea>
+      <select id="platform">
+        <option value="youtube">YouTube</option>
+        <option value="tiktok">TikTok</option>
+      </select>
+      <select id="privacy">
+        <option value="private">خاص - للاختبار</option>
+        <option value="public">عام</option>
+      </select>
+      <button class="primary" onclick="publish()">نشر / تجهيز للنشر</button>
+      <div id="publishStatus" class="status"></div>
+    </div>
+  </section>
+
+  <section id="analytics" class="section">
+    <div class="card">
+      <h3>📊 الإحصائيات</h3>
+      <p>بعد ربط الحسابات ستظهر هنا المشاهدات، التفاعل، وقت المشاهدة، وأفضل أنواع المحتوى.</p>
+      <div class="grid">
+        <div class="card"><h3>0</h3><p>مشاهدات</p></div>
+        <div class="card"><h3>0%</h3><p>Retention</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<nav>
+  <div class="navinner">
+    <button class="navbtn active" data-target="home" onclick="go('home')"><span class="icon">🏠</span>الرئيسية</button>
+    <button class="navbtn" data-target="ideas" onclick="go('ideas')"><span class="icon">💡</span>أفكار</button>
+    <button class="navbtn" data-target="script" onclick="go('script')"><span class="icon">📝</span>سكريبت</button>
+    <button class="navbtn" data-target="video" onclick="go('video')"><span class="icon">🎬</span>فيديو</button>
+    <button class="navbtn" data-target="publish" onclick="go('publish')"><span class="icon">📤</span>نشر</button>
+  </div>
+</nav>
+
+<script>
+const $ = id => document.getElementById(id);
+function go(id){
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  $(id).classList.add('active');
+  document.querySelectorAll('.navbtn').forEach(x=>x.classList.toggle('active',x.dataset.target===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+async function api(path, body){
+  const r = await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error('API error');
+  return r.json();
+}
+async function generateIdeas(){
+  $('ideasStatus').textContent='جاري توليد الأفكار...';
+  $('ideasList').innerHTML='';
+  try{
+    const d=await api('/ideas/generate',{niche:$('niche').value,count:5,seed_topic:$('seed').value||null});
+    d.ideas.forEach(x=>{
+      const div=document.createElement('div'); div.className='idea';
+      div.innerHTML=`<strong>${x.title}</strong><span class="score">AI Score ${Math.round(x.ai_score)}/100</span><button class="ghost" style="margin-top:8px">اختيار الفكرة</button>`;
+      div.querySelector('button').onclick=()=>{$('ideaTitle').value=x.title;go('script')};
+      $('ideasList').appendChild(div);
+    });
+    $('ideasStatus').textContent='تم إنشاء الأفكار.';
+  }catch(e){$('ideasStatus').textContent='تعذر الاتصال. تأكد أن السيرفر يعمل.'}
+}
+async function generateScript(){
+  $('scriptStatus').textContent='جاري كتابة السكربت...';
+  try{
+    const d=await api('/scripts/generate',{idea:$('ideaTitle').value,duration_seconds:Number($('duration').value),tone:$('tone').value});
+    $('scriptText').value=`HOOK:\n${d.hook}\n\nBODY:\n${d.body}\n\nCTA:\n${d.cta}`;
+    $('pubTitle').value=$('ideaTitle').value;
+    $('scriptStatus').textContent='السكريبت جاهز.';
+  }catch(e){$('scriptStatus').textContent='تعذر إنشاء السكربت.'}
+}
+async function planVideo(){
+  $('scriptStatus').textContent='جاري تقسيم الفيديو إلى مشاهد...';
+  try{
+    const d=await api('/videos/plan',{script:$('scriptText').value,format:'9:16'});
+    const scenes=d.scenes||[];
+    $('preview').innerHTML=`<div><b>خطة فيديو 9:16</b><br>${scenes.length} مشاهد جاهزة للتنفيذ</div>`;
+    $('scenePills').innerHTML=scenes.map((s,i)=>`<span class="pill">مشهد ${i+1} • ${s.duration||'?'}ث</span>`).join('');
+    localStorage.setItem('videoPlan',JSON.stringify(d));
+    $('scriptStatus').textContent='خطة الفيديو جاهزة.';
+    go('video');
+  }catch(e){$('scriptStatus').textContent='تعذر إنشاء خطة الفيديو.'}
+}
+function approveVideo(){
+  localStorage.setItem('approved','true');
+  go('publish');
+}
+async function publish(){
+  const status=$('publishStatus');
+  status.textContent='جاري تجهيز طلب النشر...';
+  try{
+    const platform=$('platform').value;
+    const d=await api('/publish/'+platform,{
+      title:$('pubTitle').value,
+      description:$('pubDesc').value,
+      video_path:'pending_render.mp4',
+      privacy:$('privacy').value
+    });
+    status.textContent=d.message || 'تم تجهيز النشر.';
+  }catch(e){status.textContent='تعذر تجهيز النشر.'}
+}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/static/sw.js').catch(()=>{})}
+</script>
+</body>
+</html>
