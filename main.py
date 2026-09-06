@@ -9,13 +9,10 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="AI Content Factory", version="0.1.0")
 
-@app.get("/")
+
+    @app.get("/")
 def root():
-    return {
-        "name": "AI Content Factory",
-        "version": "0.1.0",
-        "status": "running"
-    }
+    return FileResponse("/app/index.html", media_type="text/html")
 
 @app.post("/ideas/generate")
 def ideas(req: IdeaGenerateRequest):
