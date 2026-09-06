@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from .database import Base, engine
-from .schemas import IdeaGenerateRequest, ScriptGenerateRequest, VideoPlanRequest, PublishRequest
-from .ai_service import generate_ideas, generate_script, create_video_plan
-from .publishers import publish_youtube, publish_tiktok
+from database import Base, engine
+from schemas import IdeaGenerateRequest, ScriptGenerateRequest, VideoPlanRequest, PublishRequest
+from ai_service import generate_ideas, generate_script, create_video_plan
+from publishers import publish_youtube, publish_tiktok
 
 Base.metadata.create_all(bind=engine)
 
