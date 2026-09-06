@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from database import Base, engine
 from schemas import IdeaGenerateRequest, ScriptGenerateRequest, VideoPlanRequest, PublishRequest
 from ai_service import generate_ideas, generate_script, create_video_plan
