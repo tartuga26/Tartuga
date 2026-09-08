@@ -36,11 +36,11 @@ def tiktok(req: PublishRequest):
 
 @app.get("/analytics/{post_id}")
 def analytics(post_id: int):
-    return {
-        "post_id": post_id,
-        "views": 0,
-        "likes": 0,
-        "comments": 0,
-        "watch_time": 0,
-        "status": "analytics_connector_not_configured"
+ return {
+"post_id": post_id,
+"views": 0,
+"likes": 0,  
+"comments": 0,
+"watch_time": 0,
+"status": "analytics_connector_not_configured"
     }
